@@ -1,4 +1,6 @@
-import time, threading
+import time, threading 
+import random
+
 
 class bucket (threading.Thread):
     
@@ -10,16 +12,38 @@ class bucket (threading.Thread):
 
     def run(self):
         while(1):
-            time.sleep(2)
-            print(self.Filling_rate)
+            time.sleep(1)
+            if(self.token < self.capacity):
+                self.token+=self.Filling_rate
+    def use(self,TokenUsed):
+        if(TokenUsed<self.token):
+            self.token-=TokenUsed 
+            return True      
+        return False
         
-        
-    def __getTokenCount(self):
-        return token
+    def getTokenCount(self):
+        return self.token
 
+
+
+class test (threading.Thread):
+    def __init__ (self,bucket):
+        threading.Thread.__init__(self)
+        self.bucket= bucket
+    
+    def run(self):
+        
+        while(1):
+            time.sleep(1)
+            r1= 4#random.ranint(0,5)
+            b2.use(r1)
+            print(self.bucket.getTokenCount())
 
 
 b2=bucket(100,5)
 b2.start()
-b1=bucket(100,4)
-b1.start()
+
+t1 = test(b2)
+t1.start()
+
+
